@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simpleapp-deployment
+  labels:
+    app: simpleapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simpleapp
+  template:
+    metadata:
+      labels:
+        app: simpleapp
+    spec:
+      containers:
+        - name: simpleapp
+          image: demo/simpleapp
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8282
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  simpleapp-service
+  labels:
+    app: simpleapp
+spec:
+  type: NodePort
+  selector:
+    app: simpleapp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8282
+      targetPort: 8282

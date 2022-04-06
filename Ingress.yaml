@@ -1,0 +1,16 @@
+kind: Ingress
+metadata:
+  name: sampleapp-ingress
+spec:
+  ingressClassName: simpleapp-class
+  rules:
+    - host: "local.astriauniversity.com"
+      http:
+        paths:
+          - path: /author
+            pathType: Exact
+            backend:
+              service:
+                name: simpleapp-service
+                port:
+                  number: 8282
